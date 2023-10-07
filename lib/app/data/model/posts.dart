@@ -26,6 +26,8 @@ class PostForList {
 class PostForDetail {
   @JsonKey(name: 'id')
   int id;
+  @JsonKey(name: 'userId')
+  int userId;
   @JsonKey(name: 'title')
   String title;
   @JsonKey(name: 'body')
@@ -37,6 +39,7 @@ class PostForDetail {
 
   PostForDetail({
     required this.id,
+    required this.userId,
     required this.title,
     required this.body,
     this.userNmae = '',
