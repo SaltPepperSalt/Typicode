@@ -12,7 +12,7 @@ class AppPages {
     ),
     // login
     GetPage(
-      name: Routes.home,
+      name: Routes.login,
       page: () => LoginPage(),
     ),
   ];
