@@ -10,8 +10,9 @@ environment:
 dependencies:
     flutter:
         sdk: flutter
-
+    #for ui
     cupertino_icons: ^1.0.2
+    double_back_to_close: ^2.0.0
     # for state control
     get: ^4.6.6
     # for json parse

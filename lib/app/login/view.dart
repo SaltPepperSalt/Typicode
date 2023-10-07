@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:typicode/app/core/utils/double_back_terminate.dart';
 
 import 'logic.dart';
 
@@ -10,29 +11,31 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Obx(
-                  () => logic.isError.value
-                      ? const Text('Error Detected Press Refresh Button')
-                      : const Text('Type Email To login'),
-                ),
-                LoginTextField(),
-                const SizedBox(
-                  height: 40.0,
-                ),
-                Obx(
-                  () => logic.isError.value ? RetryButton() : LoginButton(),
-                ),
-              ],
+    return DoubleBackTerminate(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Login'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Obx(
+                    () => logic.isError.value
+                        ? const Text('Error Detected Press Refresh Button')
+                        : const Text('Type Email To login'),
+                  ),
+                  LoginTextField(),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  Obx(
+                    () => logic.isError.value ? RetryButton() : LoginButton(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
