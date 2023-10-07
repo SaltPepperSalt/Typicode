@@ -25,9 +25,7 @@ class LoginPage extends StatelessWidget {
                       ? const Text('Error Detected Press Refresh Button')
                       : const Text('Type Email To login'),
                 ),
-                Obx(
-                  () => LoginTextField(),
-                ),
+                LoginTextField(),
                 const SizedBox(
                   height: 40.0,
                 ),
@@ -52,15 +50,17 @@ class LoginTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: logic.emailController,
-      decoration: InputDecoration(
-        errorText:
-            logic.errorMessage.value == '' ? null : logic.errorMessage.value,
+    return Obx(
+      () => TextField(
+        controller: logic.emailController,
+        decoration: InputDecoration(
+          errorText:
+              logic.errorMessage.value == '' ? null : logic.errorMessage.value,
+        ),
+        onChanged: (String? value) {
+          logic.errorMessage.value = '';
+        },
       ),
-      onChanged: (String? value) {
-        logic.errorMessage.value = '';
-      },
     );
   }
 }
@@ -74,23 +74,25 @@ class RetryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        logic.fetchUserList();
-      },
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.black,
-        fixedSize: const Size(160, 20),
+    return Obx(
+      () => TextButton(
+        onPressed: () {
+          logic.fetchUserList();
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.black,
+          fixedSize: const Size(160, 20),
+        ),
+        child: logic.isLoadingUserList.value
+            ? const SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                ),
+              )
+            : const Text('Tap To Refresh'),
       ),
-      child: logic.isLoadingUserList.value
-          ? const SizedBox(
-              width: 20.0,
-              height: 20.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.0,
-              ),
-            )
-          : const Text('Tap To Refresh'),
     );
   }
 }
@@ -104,23 +106,25 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        logic.authService.processLogin(logic.login);
-      },
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.black,
-        fixedSize: const Size(80, 20),
+    return Obx(
+      () => TextButton(
+        onPressed: () {
+          logic.authService.processLogin(logic.login);
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.black,
+          fixedSize: const Size(80, 20),
+        ),
+        child: logic.isLoadingUserList.value
+            ? const SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                ),
+              )
+            : const Text('Login'),
       ),
-      child: logic.isLoadingUserList.value
-          ? const SizedBox(
-              width: 20.0,
-              height: 20.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.0,
-              ),
-            )
-          : const Text('Login'),
     );
   }
 }

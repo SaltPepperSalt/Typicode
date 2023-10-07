@@ -23,21 +23,30 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: logic.isLoadingPostForLists.value
-            ? const CircularProgressIndicator()
-            : ListView.separated(
-                itemBuilder: (context, index) => ListTile(
-                  title: Text('${logic.postForLists[index].value.title}'),
-                  trailing: Text(
-                      'comments : ${logic.postForLists[index].value.commentCount}'),
+        child: Obx(
+          () => logic.isLoadingPostForLists.value
+              ? const CircularProgressIndicator()
+              : ListView.separated(
+                  itemBuilder: (context, index) => ListTile(
+                    onTap: () {
+                      Get.toNamed(
+                        '${Routes.postDetail}/${logic.postForLists[index].value.id.toString()}',
+                      );
+                    },
+                    title: Text('${logic.postForLists[index].value.title}'),
+                    trailing: Obx(
+                      () => Text(
+                          'comments : ${logic.postForLists[index].value.commentCount}'),
+                    ),
+                  ),
+                  separatorBuilder: (context, index) => const Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                  itemCount: logic.postForLists.length,
                 ),
-                separatorBuilder: (context, index) => const Divider(
-                  height: 1,
-                  thickness: 1,
-                  color: Colors.grey,
-                ),
-                itemCount: logic.postForLists.length,
-              ),
+        ),
       ),
     );
   }
