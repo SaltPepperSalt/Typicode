@@ -31,7 +31,9 @@ class LoginPage extends StatelessWidget {
             Obx(
               () => logic.isError.value
                   ? TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        logic.fetchUserList();
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.black,
                         fixedSize: const Size(160, 20),
