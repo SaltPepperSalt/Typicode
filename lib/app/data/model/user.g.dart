@@ -34,7 +34,7 @@ UserAddress _$UserAddressFromJson(Map<String, dynamic> json) => UserAddress(
       suite: json['suite'] as String,
       city: json['city'] as String,
       zipcode: json['zipcode'] as String,
-      geo: json['geo'] as String,
+      geo: Geo.fromJson(json['geo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserAddressToJson(UserAddress instance) =>

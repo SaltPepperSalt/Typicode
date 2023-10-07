@@ -47,7 +47,7 @@ class UserAddress {
   @JsonKey(name: 'zipcode')
   String zipcode;
   @JsonKey(name: 'geo')
-  String geo;
+  Geo geo;
 
   UserAddress({
     required this.streetName,
