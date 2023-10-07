@@ -1,14 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:typicode/app/data/model/user.dart';
 import 'package:typicode/app/data/provider/provider.dart';
+import 'package:typicode/routes/routes.dart';
 
 class LoginPageLogic extends GetxController {
   final Provider provider = Get.find<Provider>();
+  final TextEditingController? emailController = TextEditingController();
 
   List<User> userList = <User>[];
 
   RxBool isLoadingUserList = true.obs;
   RxBool isError = false.obs;
+  RxString errorMessage = ''.obs;
 
   @override
   void onInit() async {
@@ -33,5 +37,20 @@ class LoginPageLogic extends GetxController {
       isError.value = true;
     }
     isLoadingUserList.value = false;
+  }
+
+  Future<void> login() async {
+    try {
+      final User? matchingUser = userList
+          .firstWhereOrNull((User user) => user.email == emailController?.text);
+      if (matchingUser == null) {
+        errorMessage.value = '존재하지 않는 유저입니다.';
+      } else {
+        Get.offAllNamed(Routes.home);
+      }
+    } catch (error) {
+      // error handle here
+      errorMessage.value = '에러가 발생하였습니다. 다시 시도해주세요.';
+    }
   }
 }
