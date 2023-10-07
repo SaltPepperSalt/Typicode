@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:typicode/app/data/provider/provider.dart';
+import 'package:typicode/app/data/service/auth_service.dart';
 import 'package:typicode/app/login/view.dart';
 import 'package:typicode/routes/pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initProvider();
+  await Get.putAsync(() => AuthService().init());
+
   runApp(const MyApp());
 }
 

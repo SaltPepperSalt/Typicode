@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:typicode/app/data/model/user.dart';
 import 'package:typicode/app/data/provider/provider.dart';
+import 'package:typicode/app/data/service/auth_service.dart';
 import 'package:typicode/routes/routes.dart';
 
 class LoginPageLogic extends GetxController {
@@ -46,6 +47,8 @@ class LoginPageLogic extends GetxController {
       if (matchingUser == null) {
         errorMessage.value = '존재하지 않는 유저입니다.';
       } else {
+        final AuthService authService = Get.find<AuthService>();
+        authService.user = matchingUser;
         Get.offAllNamed(Routes.home);
       }
     } catch (error) {

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:typicode/app/home/logic.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final HomePageLogic logic = Get.put(HomePageLogic());
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text('${logic.authService.user?.name} Home'),
       ),
       body: Container(
         child: const Center(
