@@ -4,12 +4,15 @@ part 'posts.g.dart';
 
 @JsonSerializable()
 class PostForList {
+  @JsonKey(name: 'id')
+  int id;
   @JsonKey(name: 'title')
   String title;
   @JsonKey(includeFromJson: false)
   int commentCount;
 
   PostForList({
+    required this.id,
     required this.title,
     this.commentCount = 0,
   });
@@ -21,6 +24,8 @@ class PostForList {
 
 @JsonSerializable()
 class PostForDetail {
+  @JsonKey(name: 'id')
+  int id;
   @JsonKey(name: 'title')
   String title;
   @JsonKey(name: 'body')
@@ -31,6 +36,7 @@ class PostForDetail {
   String userNmae;
 
   PostForDetail({
+    required this.id,
     required this.title,
     required this.body,
     this.userNmae = '',

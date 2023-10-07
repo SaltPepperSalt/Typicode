@@ -7,22 +7,26 @@ part of 'posts.dart';
 // **************************************************************************
 
 PostForList _$PostForListFromJson(Map<String, dynamic> json) => PostForList(
+      id: json['id'] as int,
       title: json['title'] as String,
     );
 
 Map<String, dynamic> _$PostForListToJson(PostForList instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
     };
 
 PostForDetail _$PostForDetailFromJson(Map<String, dynamic> json) =>
     PostForDetail(
+      id: json['id'] as int,
       title: json['title'] as String,
       body: json['body'] as String,
     );
 
 Map<String, dynamic> _$PostForDetailToJson(PostForDetail instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'body': instance.body,
     };
