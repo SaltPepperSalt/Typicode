@@ -7,7 +7,7 @@ extension PostProviderEx on Provider {
     return get('/posts/', decoder: (data) {
       try {
         if (data != null && data is List) {
-          final List<Rx<PostForList>> parsedUserJson = data.map((postJson) {
+          final List<Rx<PostForList>> parsedPostListJson = data.map((postJson) {
             final Rx<PostForList> item = PostForList.fromJson(postJson).obs;
             getComments(item.value.id).then((value) {
               Response response = value;
@@ -19,7 +19,7 @@ extension PostProviderEx on Provider {
             });
             return item;
           }).toList();
-          return parsedUserJson;
+          return parsedPostListJson;
         } else {
           return null;
         }
