@@ -1,6 +1,6 @@
 # typicode
 
-A new Flutter project.
+A new Flutter project that use typocode free api.
 
 ## Getting Started
 
