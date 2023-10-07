@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:typicode/app/home/logic.dart';
+import 'package:typicode/routes/routes.dart';
 
 class HomePage extends StatelessWidget {
   final HomePageLogic logic = Get.put(HomePageLogic());
@@ -12,9 +13,15 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('${logic.authService.user?.name} Home'),
       ),
-      body: Container(
-        child: const Center(
-          child: Text('home page'),
+      body: Center(
+        child: SingleChildScrollView(
+          child: TextButton(
+            onPressed: () {
+              logic.authService.logout();
+              Get.offAllNamed(Routes.login);
+            },
+            child: const Text('logout'),
+          ),
         ),
       ),
     );
