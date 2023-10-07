@@ -13,6 +13,8 @@ extension PostProviderEx on Provider {
               Response response = value;
               if (response.isOk && response.body != null) {
                 item.value.commentCount = response.body.length;
+                // TODO: use Freezed
+                item.refresh();
               } else {
                 item.value.commentCount = 0;
               }
