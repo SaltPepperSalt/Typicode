@@ -32,6 +32,34 @@ extension PostProviderEx on Provider {
     });
   }
 
+  Future<Response<Rx<PostForDetail>?>> getPostDetail(int postId) {
+    return get(
+      '/posts/$postId/',
+      decoder: (data) {
+        try {
+          if (data != null) {
+            final Rx<PostForDetail> parsedPostJson =
+                PostForDetail.fromJson(data).obs;
+            getComments(parsedPostJson.value.id).then((value) {
+              Response response = value;
+              if (response.isOk && response.body != null) {
+                parsedPostJson.value.commets = response.body;
+                parsedPostJson.refresh();
+              } else {
+                parsedPostJson.value.commets = [];
+              }
+            });
+
+            return parsedPostJson;
+          }
+        } catch (e) {
+          // control client side error ex) wrong field
+          return null;
+        }
+      },
+    );
+  }
+
   Future<Response<List<Comment>?>> getComments(int postId) {
     return get('/posts/$postId/comments/', decoder: (data) {
       try {
@@ -47,5 +75,9 @@ extension PostProviderEx on Provider {
         return null;
       }
     });
+  }
+
+  Future<Response> deletePost(int postId) {
+    return delete('/posts/$postId/');
   }
 }
