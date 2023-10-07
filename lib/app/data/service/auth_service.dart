@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:typicode/app/core/storage.dart';
+import 'package:typicode/app/core/utils/storage.dart';
 import 'package:typicode/app/data/model/user.dart';
 import 'package:typicode/app/login/logic.dart';
 import 'package:typicode/routes/routes.dart';
