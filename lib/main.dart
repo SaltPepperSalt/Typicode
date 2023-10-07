@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:typicode/app/data/provider/provider.dart';
 import 'package:typicode/app/data/service/auth_service.dart';
+import 'package:typicode/app/home/view.dart';
 import 'package:typicode/app/login/view.dart';
 import 'package:typicode/routes/pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initProvider();
-  await Get.putAsync(() => AuthService().init());
+  final AuthService authService =
+      await Get.putAsync(() => AuthService().init());
 
-  runApp(const MyApp());
+  runApp(MyApp(
+    isLogined: authService.user != null,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLogined;
+  const MyApp({required this.isLogined, super.key});
 
   // This widget is the root of your application.
   @override
@@ -26,7 +31,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       getPages: AppPages.pages,
-      home: LoginPage(),
+      home: isLogined ? HomePage() : LoginPage(),
     );
   }
 }

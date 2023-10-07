@@ -62,7 +62,9 @@ class LoginPage extends StatelessWidget {
                               : const Text('Tap To Refresh'),
                         )
                       : TextButton(
-                          onPressed: logic.login,
+                          onPressed: () {
+                            logic.authService.processLogin(logic.login);
+                          },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.black,
                             fixedSize: const Size(80, 20),

@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:typicode/app/data/model/user.dart';
 import 'package:typicode/app/data/provider/provider.dart';
 import 'package:typicode/app/data/service/auth_service.dart';
-import 'package:typicode/routes/routes.dart';
 
 class LoginPageLogic extends GetxController {
   final Provider provider = Get.find<Provider>();
+  final AuthService authService = Get.find<AuthService>();
   final TextEditingController? emailController = TextEditingController();
 
   List<User> userList = <User>[];
@@ -17,17 +17,28 @@ class LoginPageLogic extends GetxController {
 
   @override
   void onInit() async {
-    await fetchUserList();
+    await checkStorageStoredUserList();
     super.onInit();
   }
 
+  Future<void> checkStorageStoredUserList() async {
+    List<User>? storedUserList = await authService.readUserList();
+    if (storedUserList != null) {
+      userList = storedUserList;
+      isLoadingUserList.value = false;
+    } else {
+      await fetchUserList();
+    }
+  }
+
   Future<void> fetchUserList() async {
-    isError.value = false;
     isLoadingUserList.value = true;
+    isError.value = false;
     try {
       Response response = await provider.getUserList();
       if (response.isOk && response.body != null) {
         userList = response.body!;
+        authService.saveUserList(userList);
       } else {
         userList = [];
         isError.value = true;
@@ -40,20 +51,20 @@ class LoginPageLogic extends GetxController {
     isLoadingUserList.value = false;
   }
 
-  Future<void> login() async {
+  User? login() {
     try {
       final User? matchingUser = userList
           .firstWhereOrNull((User user) => user.email == emailController?.text);
       if (matchingUser == null) {
         errorMessage.value = '존재하지 않는 유저입니다.';
+        return null;
       } else {
-        final AuthService authService = Get.find<AuthService>();
-        authService.user = matchingUser;
-        Get.offAllNamed(Routes.home);
+        return matchingUser;
       }
     } catch (error) {
       // error handle here
       errorMessage.value = '에러가 발생하였습니다. 다시 시도해주세요.';
+      return null;
     }
   }
 }
