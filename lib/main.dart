@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       getPages: AppPages.pages,
-      home: const LoginPage(),
+      home: LoginPage(),
     );
   }
 }
